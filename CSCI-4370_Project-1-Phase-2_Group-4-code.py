@@ -2,18 +2,11 @@
 """
 Data Mining Project 1, phase 2
 Authors : Miles Glover, Madison Nicholson, Victory Orobosa
-
-Programed in python
-
-requires openpyxl library to function (only way to read xlsx files)
-pip install openpyxl will suffice if openpyxl is missing from system
 """
 
 from openpyxl import load_workbook
 
 #Part 1 functions
-
-#loads the exel file using openpyxl
 def load_XLSX(file_name):
 
     print("Loading file")
@@ -27,7 +20,7 @@ def load_XLSX(file_name):
 
     header = list(rows[0])
 
-    #constructs dataset row-by-row
+    #construct dataset row-by-row
     for row in rows[1:]:
         dataset.append(list(row))
 
@@ -45,7 +38,6 @@ def process_dataset(dataset):
     return dataset
     
 #Part 2 functions
-
 #function uses the test and training sets to perform knn with a desingated k. Jaccard distance is used for neighbor comparisons.
 def perform_KNN(train,test, k): 
 
@@ -133,7 +125,6 @@ def perform_KNN(train,test, k):
 
     return real_predicted
 
-
 #Part 3 functions
 def evaluate(real_predicted, title):
     """
@@ -203,6 +194,9 @@ import numpy as np
 #chosen framework
 from sklearn.svm import SVC
 from sklearn.model_selection import KFold
+#feature scaling addition suggestion
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import Pipeline
 
 #Part 4 functions
 
@@ -239,7 +233,13 @@ def run_svm_train_test(train_rows, test_rows, title):
     X_test, y_test = split_features_labels(test_rows)
 
     #building the SVM model (scikit-learn)
-    model = SVC(kernel='rbf', C=1.0)
+    #model = SVC(kernel='rbf', C=1.0)
+    
+    #building the SVM pipeline with feature scaling
+    model = Pipeline([
+   ('scaler', StandardScaler()),
+   ('svm', SVC(kernel='rbf', C=1.0))
+])
     
     #using training data to train the model
     model.fit(X_train, y_train)
@@ -305,3 +305,4 @@ if __name__ == '__main__':
     compare(eval_1, svm_eval_10_90, "10/90 Split")
     
     print("Program Finished")
+    
