@@ -2,11 +2,19 @@
 """
 Data Mining Project 1, phase 2
 Authors : Miles Glover, Madison Nicholson, Victory Orobosa
+
+Programed in python
+
+requires openpyxl library to function (only way to read xlsx files)
+pip install openpyxl will suffice if openpyxl is missing from system
+
 """
 
 from openpyxl import load_workbook
 
 #Part 1 functions
+
+#loads the exel file using openpyxl
 def load_XLSX(file_name):
 
     print("Loading file")
